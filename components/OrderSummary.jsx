@@ -1,31 +1,73 @@
-import { addressDummyData } from "@/assets/assets";
-import { useAppContext } from "@/context/AppContext";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useAppContext } from '@/context/AppContext';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const OrderSummary = () => {
-
-  const { currency, router, getCartCount, getCartAmount } = useAppContext()
+  const { currency, router, getCartCount, getCartAmount, getToken, user } = useAppContext();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const [userAddresses, setUserAddresses] = useState([]);
 
+  // Fetch user addresses from the API
   const fetchUserAddresses = async () => {
-    setUserAddresses(addressDummyData);
-  }
+    try {
+      const token = await getToken();
+      const { data } = await axios.get('/api/user/get-address', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
+      if (data.success) {
+        setUserAddresses(data.addresses);
+        if (data.addresses.length > 0) {
+          setSelectedAddress(data.addresses[0]); // Set the first address as default
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Handle address selection
   const handleAddressSelect = (address) => {
     setSelectedAddress(address);
     setIsDropdownOpen(false);
   };
 
+  // Create an order
   const createOrder = async () => {
+    if (!selectedAddress) {
+      toast.error('Please select an address');
+      return;
+    }
 
-  }
+    try {
+      const token = await getToken();
+      const { data } = await axios.post(
+        '/api/order/create',
+        { addressId: selectedAddress._id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
+      if (data.success) {
+        toast.success('Order created successfully');
+        router.push('/order-placed');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Fetch user addresses on component mount
   useEffect(() => {
-    fetchUserAddresses();
-  }, [])
+    if (user) {
+      fetchUserAddresses();
+    }
+  }, [user]);
 
   return (
     <div className="w-full md:w-96 bg-gray-500/5 p-5">
