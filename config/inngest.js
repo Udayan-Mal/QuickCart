@@ -1,4 +1,6 @@
 import { Inngest } from "inngest";
+import connectDB from "@/utils/connectDB";  // Ensure path is correct
+import User from "@/models/User";  // Make sure User model is correctly imported
 
 
 
