@@ -3,11 +3,20 @@ import { useAppContext } from '@/context/AppContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+
+// const OrderSummary = () => {
+//   const { currency, router, getCartCount, getCartAmount, getToken, user } = useAppContext();
+//   const [selectedAddress, setSelectedAddress] = useState(null);
+//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+//   const [userAddresses, setUserAddresses] = useState([]);
+
 const OrderSummary = () => {
-  const { currency, router, getCartCount, getCartAmount, getToken, user } = useAppContext();
+  const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userAddresses, setUserAddresses] = useState([]);
+  // ... rest of your code remains unchanged
+
 
   // Fetch user addresses from the API
   const fetchUserAddresses = async () => {
@@ -37,22 +46,38 @@ const OrderSummary = () => {
   };
 
   // Create an order
+  
   const createOrder = async () => {
-    if (!selectedAddress) {
-      toast.error('Please select an address');
-      return;
-    }
-
     try {
+      if (!selectedAddress) {
+        return toast.error('Please select an address');
+      }
+  
+      let cartItemsArray = Object.keys(cartItems).map((key) => ({
+        product: key,
+        quantity: cartItems[key]
+      }));
+      cartItemsArray = cartItemsArray.filter(item => item.quantity > 0);
+  
+      if (cartItemsArray.length === 0) {
+        return toast.error('Cart is empty');
+      }
+  
       const token = await getToken();
       const { data } = await axios.post(
         '/api/order/create',
-        { addressId: selectedAddress._id },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          address: selectedAddress._id,
+          items: cartItemsArray
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
       );
-
+  
       if (data.success) {
-        toast.success('Order created successfully');
+        toast.success(data.message);
+        setCartItems({});
         router.push('/order-placed');
       } else {
         toast.error(data.message);
@@ -61,6 +86,8 @@ const OrderSummary = () => {
       toast.error(error.message);
     }
   };
+
+  
 
   // Fetch user addresses on component mount
   useEffect(() => {
