@@ -1,36 +1,189 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuickCart - Full Stack E-Commerce Website
 
-## Getting Started
+QuickCart is a modern, full-stack e-commerce platform built with **Next.js**. It features **user authentication**, **product management**, **cart functionality**, **order tracking**, and an **admin dashboard**. The project integrates **Clerk for authentication**, **Inngest for background jobs**, **MongoDB for data storage**, and **Cloudinary for image hosting**. Deployed on **Vercel** for public access.
 
-First, run the development server:
+## 🚀 Live Demo
+👉 [QuickCart Live](https://quick-cart-rose.vercel.app)
 
+## 🔥 Features
+
+### 🛍 User Features
+- **User Authentication**: Secure login and signup using **Clerk**.
+- **Product Browsing**: View products with details like name, description, price, and images.
+- **Cart System**: Add products to the cart, update quantities, and remove items.
+- **Order Placement**: Checkout with a selected shipping address.
+- **Order History**: View past orders and their status.
+
+### ⚡ Admin Features
+- **Product Management**:
+  - Add new products with images, descriptions, and pricing.
+  - Update existing product details.
+  - List and manage all products.
+- **Order Management**:
+  - View all user orders.
+  - Update order status (e.g., shipped, delivered).
+
+### 🛠 Technical Features
+- **Background Jobs**: Efficient order processing and user data synchronization using **Inngest**.
+- **Image Storage**: Secure product image storage with **Cloudinary**.
+- **Database**: MongoDB for storing user data, products, and orders.
+- **Responsive UI**: Optimized for mobile and desktop.
+- **Deployment**: Hosted on **Vercel**.
+
+## 📌 Tech Stack
+- **Framework**: Next.js (v15.1.6)
+- **Authentication**: Clerk
+- **Database**: MongoDB
+- **Background Jobs**: Inngest
+- **Image Storage**: Cloudinary
+- **Deployment**: Vercel
+- **Dependencies**: axios, react-hot-toast, mongoose
+
+---
+
+## 🛠 Getting Started
+
+### 📌 Prerequisites
+- **Node.js** (v18 or higher)
+- **MongoDB** (local or Atlas account)
+- **Git**
+
+### 🔹 Installation
+
+#### Clone the Repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Udayan-Mal/QuickCart.git
+cd QuickCart
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Install Dependencies:
+```bash
+npm install  # or yarn install or pnpm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#### Set Up Environment Variables:
+Create a `.env.local` file in the root directory and add the following:
+```plaintext
+MONGODB_URI=your_mongodb_connection_string
+CLERK_SECRET_KEY=your_clerk_secret_key
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+INNGEST_EVENT_KEY=your_inngest_event_key
+INNGEST_SIGNING_KEY=your_inngest_signing_key
+```
+Obtain the required keys from Clerk, Cloudinary, and Inngest dashboards.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Run the Development Server:
+```bash
+npm run dev  # or yarn dev or pnpm dev
+```
+Visit **[http://localhost:3000](http://localhost:3000)** to see the app.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📌 Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 👤 User Actions
+- Browse products and add them to the cart at `/`.
+- View and manage orders at `/my-orders`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🏪 Seller/Admin Actions
+- Add products via `/seller` (requires **seller role** in Clerk).
+- Manage orders at `/seller/orders`.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📂 Project Structure
+```
+QuickCart/
+├── app/                  # Next.js app directory
+│   ├── api/             # API routes (cart, order, product, user)
+│   ├── my-orders/       # Customer orders page
+│   ├── seller/          # Seller dashboard
+│   └── page.js          # Homepage
+├── components/          # React components
+├── config/              # DB and Inngest configs
+├── context/             # App context
+├── lib/                 # Utilities (e.g., authSeller)
+├── models/              # Mongoose models
+├── public/              # Static assets
+└── .env                 # Environment variables
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔗 API Endpoints
+| Method | Endpoint | Description | Authentication |
+|--------|---------|-------------|---------------|
+| GET | `/api/product/list` | List products | None |
+| POST | `/api/product/add` | Add product | Seller |
+| GET | `/api/order/list` | List user orders | User |
+| GET | `/api/order/seller-orders` | List all orders | Seller |
+| POST | `/api/order/create` | Create order | User |
+| GET | `/api/user/get-address` | Get addresses | User |
+| POST | `/api/user/add-address` | Add address | User |
+| POST | `/api/cart/update` | Update cart | User |
+| GET | `/api/cart/get` | Get cart | User |
+
+---
+
+## 📚 Learn More
+- **[Next.js Docs](https://nextjs.org/docs)** - Learn about Next.js features and API.
+- **[Clerk Docs](https://clerk.dev/docs)** - Authentication setup.
+- **[Inngest Docs](https://www.inngest.com/docs)** - Background job management.
+- **[MongoDB Docs](https://www.mongodb.com/docs)** - Database setup.
+- **[Cloudinary Docs](https://cloudinary.com/documentation)** - Image storage.
+
+---
+
+## 🚀 Deployment on Vercel
+
+The easiest way to deploy is using **Vercel**:
+
+#### Push to GitHub:
+```bash
+git add .
+git commit -m "Deploy QuickCart"
+git push origin main
+```
+
+#### Deploy on Vercel:
+1. Link your GitHub repository to Vercel.
+2. Add **.env** variables in the Vercel dashboard.
+3. Click **Deploy**!
+
+See **[Next.js Deployment Guide](https://nextjs.org/docs/deployment)** for more details.
+
+---
+
+## 🤝 Contributing
+Contributions are welcome! Follow these steps:
+1. **Fork** the repository.
+2. **Create a branch** (`git checkout -b feature/your-feature`).
+3. **Commit changes** (`git commit -m "Add feature"`).
+4. **Push the branch** (`git push origin feature/your-feature`).
+5. **Open a Pull Request**.
+
+---
+
+## 📜 License
+This project is licensed under the **MIT License**. See the **LICENSE** file for details.
+
+---
+
+## 🎉 Acknowledgments
+- **Clerk** - Seamless authentication.
+- **Inngest** - Efficient background jobs.
+- **Cloudinary** - Reliable image storage.
+- **Vercel** - Hassle-free deployment.
+
+---
+
+## 📧 Contact
+For any questions or feedback, reach out to:
+- **Udayan Mal**
+- **GitHub**: [Udayan-Mal](https://github.com/Udayan-Mal)
+
+
