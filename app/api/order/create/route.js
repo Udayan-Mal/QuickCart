@@ -46,6 +46,7 @@ export async function POST(request) {
       address,
       amount: totalAmount,
       date: Date.now(),
+      paymentType: "COD" // Added paymentType here
     });
 
     // Send an event to Inngest
@@ -57,6 +58,7 @@ export async function POST(request) {
         items,
         amount: totalAmount,
         date: Date.now(),
+        paymentType: "COD" // Optionally included in Inngest event
       },
     });
 
