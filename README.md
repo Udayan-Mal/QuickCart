@@ -13,6 +13,7 @@ QuickCart is a modern, full-stack e-commerce platform built with **Next.js**. It
 - **Cart System**: Add products to the cart, update quantities, and remove items.
 - **Order Placement**: Checkout with a selected shipping address.
 - **Order History**: View past orders and their status.
+- **Checkout**: Multiple payment options (Stripe + COD)
 
 ### ⚡ Admin Features
 - **Product Management**:
@@ -22,6 +23,7 @@ QuickCart is a modern, full-stack e-commerce platform built with **Next.js**. It
 - **Order Management**:
   - View all user orders.
   - Update order status (e.g., shipped, delivered).
+- **Dashboard**: Sales analytics
 
 ### 🛠 Technical Features
 - **Background Jobs**: Efficient order processing and user data synchronization using **Inngest**.
@@ -29,6 +31,12 @@ QuickCart is a modern, full-stack e-commerce platform built with **Next.js**. It
 - **Database**: MongoDB for storing user data, products, and orders.
 - **Responsive UI**: Optimized for mobile and desktop.
 - **Deployment**: Hosted on **Vercel**.
+
+### 💳 New Payment Features
+- **Stripe Integration**: Secure credit card payments
+- **COD Option**: Cash on Delivery
+- **Webhook Handling**: Real-time payment status updates
+- **Receipt Generation**: Automatic payment confirmation
 
 ## 📌 Tech Stack
 - **Framework**: Next.js (v15.1.6)
@@ -38,6 +46,20 @@ QuickCart is a modern, full-stack e-commerce platform built with **Next.js**. It
 - **Image Storage**: Cloudinary
 - **Deployment**: Vercel
 - **Dependencies**: axios, react-hot-toast, mongoose
+
+---
+
+## 🛠 Tech Stack
+| Category          | Technology                          |
+|-------------------|-------------------------------------|
+| Framework         | Next.js 15                          |
+| Authentication    | Clerk                               |
+| Database          | MongoDB                             |
+| Payments          | Stripe                              |
+| Background Jobs   | Inngest                             |
+| Image Storage     | Cloudinary                          |
+| Styling           | Tailwind CSS                        |
+| Deployment        | Vercel                              |
 
 ---
 
