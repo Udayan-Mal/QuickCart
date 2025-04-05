@@ -94,6 +94,9 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 INNGEST_EVENT_KEY=your_inngest_event_key
 INNGEST_SIGNING_KEY=your_inngest_signing_key
+STRIPE_PUBLISHABLE_KEY = your_stripe_publishable_key
+STRIPE_SECRET_KEY = your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET = your_stripe_webhook_key
 ```
 Obtain the required keys from Clerk, Cloudinary, and Inngest dashboards.
 
