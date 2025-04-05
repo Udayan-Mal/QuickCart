@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
-import { connectDB } from "@/config/db"; // Update the path as per your project structure
+import connectDB from '@/config/db'; // Update the path as per your project structure
 import User from "@/models/User";         // Update the path as per your project structure
 import Order from "@/models/Order";       // Update the path as per your project structure
 
